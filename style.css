@@ -1,0 +1,411 @@
+window {
+    background-color: transparent; 
+}
+
+#dynamic-island {
+    background-color: #000000; 
+    border-radius: 28px; 
+    border: 1px solid rgba(255, 255, 255, 0.07); 
+    padding: 3px 12px; 
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.25);
+}
+
+#dynamic-island.expanded {
+    padding: 12px 20px; 
+    border-radius: 38px; 
+}
+
+#dynamic-island.menu-expanded {
+    padding-bottom: 12px;
+}
+
+#dynamic-island * {
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+    border: none;       
+    outline: none;      
+}
+
+/* --- WORKSPACE DOTS --- */
+#ws-dot {
+    background-color: rgba(255, 255, 255, 0.25);
+    min-width: 7px;
+    min-height: 7px;
+    border-radius: 50%;
+    margin: 0 2px;
+    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#ws-dot.active {
+    background-color: #ffffff;
+    min-width: 20px;
+    border-radius: 4px;
+}
+
+/* --- WORKSPACE VISUALIZER EFFECT (ULTRA-POLISHED) --- */
+
+/* Wave 1: Fast, punchy bass hits */
+@keyframes wave-alpha {
+    0% { min-height: 7px; background-color: rgba(255, 255, 255, 0.2); box-shadow: none; }
+    30% { min-height: 22px; background-color: #ffffff; box-shadow: 0px 0px 12px rgba(255, 255, 255, 0.6); border-radius: 8px; }
+    100% { min-height: 7px; background-color: rgba(255, 255, 255, 0.2); box-shadow: none; }
+}
+
+/* Wave 2: Slower, rolling mid-tones */
+@keyframes wave-beta {
+    0% { min-height: 7px; background-color: rgba(255, 255, 255, 0.3); box-shadow: none; }
+    60% { min-height: 14px; background-color: rgba(255, 255, 255, 0.85); box-shadow: 0px 0px 6px rgba(255, 255, 255, 0.3); border-radius: 5px; }
+    100% { min-height: 7px; background-color: rgba(255, 255, 255, 0.3); box-shadow: none; }
+}
+
+/* Wave 3: Erratic, high-frequency treble */
+@keyframes wave-gamma {
+    0% { min-height: 7px; background-color: rgba(255, 255, 255, 0.2); box-shadow: none; }
+    20% { min-height: 18px; background-color: #ffffff; box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.4); border-radius: 6px; }
+    80% { min-height: 10px; background-color: rgba(255, 255, 255, 0.5); box-shadow: none; }
+    100% { min-height: 7px; background-color: rgba(255, 255, 255, 0.2); box-shadow: none; }
+}
+
+/* Wave 4: Deep, steady sub-bass */
+@keyframes wave-delta {
+    0% { min-height: 7px; background-color: rgba(255, 255, 255, 0.3); box-shadow: none; }
+    45% { min-height: 26px; background-color: #ffffff; box-shadow: 0px 0px 14px rgba(255, 255, 255, 0.7); border-radius: 10px; }
+    100% { min-height: 7px; background-color: rgba(255, 255, 255, 0.3); box-shadow: none; }
+}
+
+/* --- Distributing the Algorithms --- */
+/* The easing curve (0.2, 0.8, 0.2, 1) gives it a liquid, fluid motion */
+
+.visualizer-active #ws-dot:nth-child(1):not(.active),
+.visualizer-active #ws-dot:nth-child(8):not(.active) {
+    animation: wave-alpha 0.65s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.visualizer-active #ws-dot:nth-child(2):not(.active),
+.visualizer-active #ws-dot:nth-child(7):not(.active) {
+    animation: wave-beta 0.8s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+    animation-delay: 0.1s;
+}
+
+.visualizer-active #ws-dot:nth-child(3):not(.active),
+.visualizer-active #ws-dot:nth-child(6):not(.active) {
+    animation: wave-gamma 0.55s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+    animation-delay: 0.25s;
+}
+
+.visualizer-active #ws-dot:nth-child(4):not(.active),
+.visualizer-active #ws-dot:nth-child(5):not(.active) {
+    animation: wave-delta 0.9s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+    animation-delay: 0.4s;
+}
+
+/* --- The Anchor (Active Workspace) --- */
+/* Completely freeze the active workspace dot so you don't lose your place, 
+   but give it a permanent, bright halo so it fits the music aesthetic */
+.visualizer-active #ws-dot.active {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 16px rgba(255, 255, 255, 0.9);
+    min-height: 7px; 
+    border-radius: 50%; /* Snap it back to a circle */
+}
+
+#time-box {
+    margin: 0px 10px;
+}
+
+/* --- TYPOGRAPHY AND GLYPHS --- */
+#icon-label {
+    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", sans-serif;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+#time-label {
+    font-family: "SF Pro Display", "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.5px;
+}
+
+#date-label {
+    font-family: "SF Pro Text", "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4); 
+    margin-top: 3px;
+}
+
+#stat-label {
+    font-family: "SF Pro Text", "Inter", sans-serif;
+    font-weight: 600; 
+    font-size: 12px;
+    letter-spacing: -0.1px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* --- SUB-MENU LAYER RESPONSIVENESS --- */
+#power-profiles, #wifi-control-panel, #control-center-panel {
+    margin-top: 14px;
+    margin-bottom: 4px;
+    padding: 0px 4px;
+}
+
+#slider-status-text, #wifi-status-text {
+    font-family: "SF Pro Text", "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+    min-width: 90px;
+}
+#wifi-status-text {
+    min-width: 120px;
+}
+
+/* --- BUTTON LAYOUTS --- */
+#profile-btn, #wifi-action-btn {
+    font-family: "SF Pro Text", "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    transition: all 0.25s ease;
+}
+
+#profile-btn {
+    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", sans-serif;
+    font-size: 18px;
+    min-width: 44px;
+    min-height: 36px;
+}
+
+#wifi-action-btn {
+    padding: 6px 14px;
+    min-width: 74px;
+}
+
+#profile-btn:hover, #wifi-action-btn:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+}
+
+#profile-btn.active, #wifi-action-btn.active {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* --- SLIDERS --- */
+#dynamic-island scale.slider-bar trough {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    min-height: 6px;
+}
+
+#dynamic-island scale.slider-bar highlight {
+    background-color: #ffffff;
+    border-radius: 4px;
+}
+
+#dynamic-island scale.slider-bar slider {
+    background-color: #ffffff;
+    border-radius: 50%;
+    min-width: 12px;
+    min-height: 12px;
+    margin: -3px 0px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.35);
+    transition: all 0.15s ease;
+}
+
+#dynamic-island scale.slider-bar slider:hover {
+    min-width: 16px;
+    min-height: 16px;
+    margin: -5px -2px;
+    background-color: #f5f5f5;
+}
+
+/* --- APP LAUNCHER PANEL --- */
+#app-launcher-panel {
+    margin-top: 14px;
+    padding: 6px;
+}
+
+#launcher-search {
+    min-height: 38px;
+    border-radius: 19px;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    padding: 0px 18px;
+    font-family: "SF Pro Text", "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+    caret-color: #ffffff;
+}
+
+#launcher-search:focus {
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#app-btn {
+    background-color: transparent;
+    border-radius: 20px;
+    padding: 14px 6px; 
+    min-width: 95px; 
+    min-height: 105px;
+    transition: all 0.2s ease;
+}
+
+#app-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#app-label {
+    font-family: "SF Pro Text", "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    margin-top: 6px; 
+}
+
+.launcher-scroll scrollbar, .launcher-scroll scrollbar slider {
+    background-color: transparent;
+    min-width: 0px;
+}
+
+/* --- NOTIFICATIONS --- */
+#notif-top {
+    padding: 0px 8px;
+}
+
+#top-notif-summary {
+    font-family: "SF Pro Text", "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+#top-notif-body {
+    font-family: "SF Pro Text", "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#notification-panel {
+    margin-top: 14px;
+    padding: 6px;
+}
+
+#panel-header {
+    font-family: "SF Pro Display", "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+#notif-row {
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 8px;
+}
+
+#notif-summary {
+    font-family: "SF Pro Text", "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+#notif-body {
+    font-family: "SF Pro Text", "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.55);
+    margin-top: 4px;
+}
+
+.notif-list {
+    background-color: transparent;
+}
+
+#notif-actions {
+    margin-top: 4px;
+}
+
+#notif-action-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-family: "SF Pro Text", "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    border-radius: 8px;
+    padding: 6px 14px;
+    transition: all 0.2s ease;
+}
+
+#notif-action-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* --- MEDIA PLAYER --- */
+#media-panel {
+    margin-top: 14px;
+    padding: 10px;
+    min-width: 280px;
+}
+
+#media-title {
+    font-family: "SF Pro Display", "Inter", sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 2px;
+}
+
+#media-artist {
+    font-family: "SF Pro Text", "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 12px;
+}
+
+#media-btn, #media-btn-play {
+    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", sans-serif;
+    background-color: transparent;
+    color: #ffffff;
+    border-radius: 50%;
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#media-btn {
+    font-size: 22px;
+    padding: 8px 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#media-btn:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#media-btn:disabled {
+    color: rgba(255, 255, 255, 0.15);
+    background-color: transparent;
+}
+
+#media-btn-play {
+    font-size: 26px;
+    padding: 12px 18px;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#media-btn-play:hover {
+    background-color: #e0e0e0;
+}
